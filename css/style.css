@@ -398,28 +398,25 @@ Header Style
     margin-left: -1px;
 } */
 
-.header-area .main-nav .nav li:last-child:hover a {
+/* .header-area .main-nav .nav li:last-child:hover a {
     background-color: #36454F;
 }
 
 .header-area .main-nav .nav li:last-child:hover a i {
     color: #fff;
-}
+} */
 
 .header-area .main-nav .nav li:hover a {
     color: #003366;
-    ;
 }
 
 .header-area .main-nav .nav li a.active {
     color: #003366;
-    ;
 }
 
 
 .background-header .main-nav .nav li a.active {
     color: #003366;
-    ;
 }
 
 .header-area .main-nav .menu-trigger {
