@@ -26,6 +26,7 @@
                                 <li><a href="properties.php">Properties</a></li>
                                 <!-- <li><a href="property-details.php">Property Details</a></li> -->
                                 <li><a href="contact.php">Contact Us</a></li>
+                                <li><a href="about.php">About Us</a></li>
                                 <li><a href="account.php">Account</a></li>
                                 <!-- <li><a href="#"><i class="fa fa-calendar"></i> Schedule a visit</a></li> -->
                             </ul>   
