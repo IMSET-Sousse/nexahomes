@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <span class="category"><?= $getCategory['categoryName'] ?? ''; ?></span>
                     <h6>$<?= $getProduct['price']; ?></h6>
                     <h4><?= $getProduct['title'] ?? ''; ?></h4>
-                    <h4><b>Average Rating: </b><?= number_format($averageRating, 1); ?></h4>
+                    <h6><b>Average Rating: </b><?= number_format($averageRating, 1); ?></h6>
                     <p><?= $getProduct['description'] ?? ''; ?></p>
                 </div>
           <div class="accordion" id="accordionExample">

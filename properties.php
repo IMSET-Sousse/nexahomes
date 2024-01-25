@@ -12,31 +12,42 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js" integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css" integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js" integrity="sha512-WW8/jxkELe2CAiE4LvQfwm1rajOS8PHasCCx+knHG0gBHt8EXxS6T6tJRTGuDQVnluuAvMxWF4j8SNFDKceLFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha512-Zq2BOxyhvnRFXu0+WE6ojpZLOU2jdnqbrM1hmVdGzyeCa1DgM3X5Q4A/Is9xA1IkbUeDd7755dNNI/PzSf2Pew==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<head>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.js"
+        integrity="sha512-gY25nC63ddE0LcLPhxUJGFxa2GoIyA5FLym4UJqHDEMHjp8RET6Zn/SHo1sltt3WuVtqfyxECP38/daUc/WVEA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.css"
+        integrity="sha512-UTNP5BXLIptsaj5WdKFrkFov94lDx+eBvbKyoe1YAfjeRPC+gT5kyZ10kOHCfNZqEui1sxmqvodNUx3KbuYI/A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js"
+        integrity="sha512-WW8/jxkELe2CAiE4LvQfwm1rajOS8PHasCCx+knHG0gBHt8EXxS6T6tJRTGuDQVnluuAvMxWF4j8SNFDKceLFg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js"
+        integrity="sha512-Zq2BOxyhvnRFXu0+WE6ojpZLOU2jdnqbrM1hmVdGzyeCa1DgM3X5Q4A/Is9xA1IkbUeDd7755dNNI/PzSf2Pew=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </head>
+
 <body>
-<?php require('./header.php') ?>    
+    <?php require('./header.php') ?>
     <div class="page-heading header-text">
         <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-            <span class="breadcrumb"><a href="#">Home</a> / Properties</span>
-            <h3>Properties</h3>
+            <div class="row">
+                <div class="col-lg-12">
+                    <span class="breadcrumb"><a href="#">Home</a> / Properties</span>
+                    <h3>Properties</h3>
+                </div>
             </div>
-        </div>
         </div>
     </div>
 
     <div class="section properties">
         <div class="container">
-        <!-- <ul class="properties-filter">
+            <!-- <ul class="properties-filter">
             <li>
             <a class="is_active" href="#!" data-filter="*">Show All</a>
             </li>
@@ -50,18 +61,18 @@
             <a href="#!" data-filter=".rac">Penthouse</a>
             </li>
         </ul> -->
-        <ul class="properties-filter">
-            <li>
-                <a class="is_active" href="#!" data-filter="*">Show All</a>
-            </li>
-            <?php   foreach($categories as $data){ ?>
+            <ul class="properties-filter">
                 <li>
-                <a href="#!" data-filter=".catId<?= $data['id']; ?>"><?= $data['categoryName']; ?></a>
-            </li>
+                    <a class="is_active" href="#!" data-filter="*">Show All</a>
+                </li>
+                <?php   foreach($categories as $data){ ?>
+                <li>
+                    <a href="#!" data-filter=".catId<?= $data['id']; ?>"><?= $data['categoryName']; ?></a>
+                </li>
                 <?php
                 }?>
-        </ul>
-        <!-- <div class="row properties-box">
+            </ul>
+            <!-- <div class="row properties-box">
             <div class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 adv">
             <div class="item">
                 <a href="property-details.html"><img src="images/property-01.jpg" alt=""></a>
@@ -225,28 +236,34 @@
             </div>
             </div>
         </div> -->
-        
-        <?php   foreach($content as $data){ ?>
-      <div class="row properties-box">
-            <div class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 catId<?= $data['categoryId']; ?>">
-            <div class="item">
-            <a href="property-details.php?id=<?= $data['id']; ?>"> <img src="./dashbord/public/images/thumbnail/<?php echo $data ['thumbnail']; ?>"></a>
-                <span class="category"><?= $data['title']; ?></span>
-                <h6>$<?= $data['price']; ?></h6>
-                <h4><a href="property-details.php?id=<?= $data['id']; ?>"><?= $data['description']; ?></a></h4>
 
-                <div class="main-button">
-                <li><a href="property-details.php?id=<?= $data['id']; ?>">Details</a>
+            <?php   foreach($content as $data){ ?>
+            <div class="row properties-box">
+                <div
+                    class="col-lg-4 col-md-6 align-self-center mb-30 properties-items col-md-6 catId<?= $data['categoryId']; ?>">
+                    <div class="item">
+                        <a href="property-details.php?id=<?= $data['id']; ?>"> <img
+                                src="./dashbord/public/images/thumbnail/<?php echo $data ['thumbnail']; ?>"></a>
+                        <span class="category"><?= $data['title']; ?></span>
+                        <h6>$<?= $data['price']; ?></h6>
+                        <h4><a href="property-details.php?id=<?= $data['id']; ?>"><?= $data['description']; ?></a></h4>
+
+                        <div class="main-button">
+                            <li><a href="property-details.php?id=<?= $data['id']; ?>">Details</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
-            <?php
+                <?php
             }
         ?>
-        
-        
+            </div>
         </div>
     </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
     <?php require('./footer.php') ?>
 
     <script src="js/custom.js"></script>
