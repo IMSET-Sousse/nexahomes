@@ -1,3 +1,43 @@
+<?php
+  require_once('./dashbord/database.php');
+  require_once('./dashbord/scripts/productsManger.php');
+  require_once('./dashbord/scripts/CategoryManager.php');
+
+  $productsManager= new ProductsManager($conn);
+  $content = $productsManager->get();
+  $categoryManager= new CategoryManager($conn);
+  $categories = $categoryManager->get();
+
+
+  if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+    $getProduct = $productsManager->getById($id);
+  }
+  $categoryManager = new CategoryManager($conn);
+$getCategory = $categoryManager->getById($getProduct['categoryId']);
+$averageRating = $productsManager->getAverageRatingByProductId($id);
+$comments = $productsManager->getCommentsByProductId($id);
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if (isset($_POST['addComment'])) {
+        $comment = isset($_POST['comment']) ? $_POST['comment'] : '';
+        $success = $productsManager->addCommentToProduct($id, $comment);
+
+        $getProduct = $productsManager->getById($id);
+        $comments = $productsManager->getCommentsByProductId($id); // Update comments after adding a new one
+    } elseif (isset($_POST['addRating'])) {
+        $rating = isset($_POST['rating']) ? intval($_POST['rating']) : 0;
+
+        if ($rating >= 1 && $rating <= 5) {
+            $success = $productsManager->addRatingToProduct($id, $rating);
+
+            $getProduct = $productsManager->getById($id);
+        } else {
+
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,8 +52,8 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12">
-          <span class="breadcrumb"><a href="#">Home</a>  /  Single Property</span>
-          <h3>Single Property</h3>
+        <span class="breadcrumb"><a href="#">Home</a> / <?= $getProduct['title'] ?? ''; ?></span>
+                <h3><?= $getProduct['title'] ?? ''; ?></h3>
         </div>
       </div>
     </div>
@@ -24,15 +64,24 @@
       <div class="row">
         <div class="col-lg-8">
           <div class="main-image">
-            <img src="images/single-property.jpg" alt="">
+            <!-- <img src="images/single-property.jpg" alt=""> -->
+            <img src="./dashbord/public/images/thumbnail/<?php echo $getProduct['thumbnail']; ?>">
+
           </div>
-          <div class="main-content">
+          <!-- <div class="main-content">
             <span class="category">Apparment</span>
             <h4>24 New Street Miami, OR 24560</h4>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor pack incididunt ut labore et dolore magna aliqua quised ipsum suspendisse.
             
             <br><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor pack incididunt ut labore et dolore magna aliqua quised ipsum suspendisse.</p>
-          </div> 
+          </div>  -->
+          <div class="main-content">
+                    <span class="category"><?= $getCategory['categoryName'] ?? ''; ?></span>
+                    <h6>$<?= $getProduct['price']; ?></h6>
+                    <h4><?= $getProduct['title'] ?? ''; ?></h4>
+                    <h4><b>Average Rating: </b><?= number_format($averageRating, 1); ?></h4>
+                    <p><?= $getProduct['description'] ?? ''; ?></p>
+                </div>
           <div class="accordion" id="accordionExample">
             <div class="accordion-item">
               <h2 class="accordion-header" id="headingOne">
@@ -95,117 +144,59 @@
           </div>
         </div>
       </div>
+      <div class="row mt-4">
+            <div class="col-lg-12">
+                <form id="comment-form" method="post">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group mb-3">
+                                <label for="comment">Add Comment</label>
+                                <textarea class="form-control" name="comment" id="comment" placeholder="Your Comment" required=""></textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-warning" name="addComment">Add Comment</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <form id="rating-form" method="post">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group mb-3">
+                                <label for="rating">Add Rating (1-5)</label>
+                                <input type="number" class="form-control" name="rating" id="rating" min="1" max="5" required="">
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success" name="addRating">Add Rating</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+        <div class="col-lg-12">
+            <h4>Comments:</h4>
+            <ul class="list-group">
+                <?php foreach ($comments as $comment) : ?>
+                    <li class="list-group-item"><?= $comment['comment']; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
     </div>
   </div>
 
-  <div class="section best-deal">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4">
-          <div class="section-heading">
-            <h6>| Best Deal</h6>
-            <h2>Find Your Best Deal Right Now!</h2>
-          </div>
-        </div>
-        <div class="col-lg-12">
-          <div class="tabs-content">
-            <div class="row">
-              <div class="nav-wrapper ">
-                <ul class="nav nav-tabs" role="tablist">
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="appartment-tab" data-bs-toggle="tab" data-bs-target="#appartment" type="button" role="tab" aria-controls="appartment" aria-selected="true">Appartment</button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="villa-tab" data-bs-toggle="tab" data-bs-target="#villa" type="button" role="tab" aria-controls="villa" aria-selected="false">Villa House</button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="penthouse-tab" data-bs-toggle="tab" data-bs-target="#penthouse" type="button" role="tab" aria-controls="penthouse" aria-selected="false">Penthouse</button>
-                  </li>
-                </ul>
-              </div>              
-              <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="appartment" role="tabpanel" aria-labelledby="appartment-tab">
-                  <div class="row">
-                    <div class="col-lg-3">
-                      <div class="info-table">
-                        <ul>
-                          <li>Total Flat Space <span>540 m2</span></li>
-                          <li>Floor number <span>3</span></li>
-                          <li>Number of rooms <span>8</span></li>
-                          <li>Parking Available <span>Yes</span></li>
-                          <li>Payment Process <span>Bank</span></li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <img src="images/deal-01.jpg" alt="">
-                    </div>
-                    <div class="col-lg-3">
-                      <h4>All Info About Apartment</h4>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor pack incididunt ut labore et dolore magna aliqua quised ipsum suspendisse. <br><br>Swag fanny pack lyft blog twee. JOMO ethical copper mug, succulents typewriter shaman DIY kitsch twee taiyaki fixie hella venmo after messenger poutine next level humblebrag swag franzen.</p>
-                      <div class="icon-button">
-                        <a href="#"><i class="fa fa-calendar"></i> Schedule a visit</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="villa" role="tabpanel" aria-labelledby="villa-tab">
-                  <div class="row">
-                    <div class="col-lg-3">
-                      <div class="info-table">
-                        <ul>
-                          <li>Total Flat Space <span>250 m2</span></li>
-                          <li>Floor number <span>26th</span></li>
-                          <li>Number of rooms <span>5</span></li>
-                          <li>Parking Available <span>Yes</span></li>
-                          <li>Payment Process <span>Bank</span></li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <img src="images/deal-02.jpg" alt="">
-                    </div>
-                    <div class="col-lg-3">
-                      <h4>Detail Info About New Villa</h4>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor pack incididunt ut labore et dolore magna aliqua quised ipsum suspendisse. <br><br>Swag fanny pack lyft blog twee. JOMO ethical copper mug, succulents typewriter shaman DIY kitsch twee taiyaki fixie hella venmo after messenger poutine next level humblebrag swag franzen.</p>
-                      <div class="icon-button">
-                        <a href="#"><i class="fa fa-calendar"></i> Schedule a visit</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="penthouse" role="tabpanel" aria-labelledby="penthouse-tab">
-                  <div class="row">
-                    <div class="col-lg-3">
-                      <div class="info-table">
-                        <ul>
-                          <li>Total Flat Space <span>320 m2</span></li>
-                          <li>Floor number <span>34th</span></li>
-                          <li>Number of rooms <span>6</span></li>
-                          <li>Parking Available <span>Yes</span></li>
-                          <li>Payment Process <span>Bank</span></li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <img src="images/deal-03.jpg" alt="">
-                    </div>
-                    <div class="col-lg-3">
-                      <h4>Extra Info About Penthouse</h4>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor pack incididunt ut Kinfolk tonx seitan crucifix 3 wolf moon bicycle rights keffiyeh snackwave wolf same vice, chillwave vexillologistlabore et dolore magna aliqua quised ipsum suspendisse. <br><br>Swag fanny pack lyft blog twee. JOMO ethical copper mug, succulents typewriter shaman DIY kitsch twee taiyaki fixie hella venmo after messenger poutine next level humblebrag swag franzen.</p>
-                      <div class="icon-button">
-                        <a href="#"><i class="fa fa-calendar"></i> Schedule a visit</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
 <?php require('./footer.php') ?>
 

@@ -1,3 +1,13 @@
+<?php
+
+   require_once('./dashbord/database.php');
+   require_once('./dashbord/scripts/productsManger.php');
+
+   $productsManger= new ProductsManager($conn);
+   $products = $productsManger->get();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -261,25 +271,24 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-4 col-md-6">
-                    <div class="item">
-                        <a href="property-details.html"><img src="images/property-01.jpg" alt=""></a>
-                        <span class="category">Luxury Villa</span>
-                        <h6>$2.264.000</h6>
-                        <h4><a href="property-details.php">18 New Street Miami, OR 97219</a></h4>
-                        <ul>
-                            <li>Bedrooms: <span>8</span></li>
-                            <li>Bathrooms: <span>8</span></li>
-                            <li>Area: <span>545m2</span></li>
-                            <li>Floor: <span>3</span></li>
-                            <li>Parking: <span>6 spots</span></li>
-                        </ul>
-                        <div class="main-button">
-                            <a href="property-details.php">Schedule a visit</a>
-                        </div>
-                    </div>
+            <?php     foreach($products as $data){ ?>
+            <div class="col-lg-4 col-md-6">
+            <div class="item">
+            <a href="property-details.php?id=<?= $data['id']; ?>"><img src="./dashbord/public/images/thumbnail/<?php echo $data ['thumbnail']; ?>" width="200px"></a>
+                <span class="category"><?= $data['title']; ?></span>
+                <h6>$<?= $data['price']; ?></h6>
+                <h4><a href="property-details.php?id=<?= $data['id']; ?>"><?= $data['description']; ?></a></h4>
+
+                <div class="main-button">
+                <a href="property-details.php?id=<?= $data['id']; ?>">Details</a>
                 </div>
-                <div class="col-lg-4 col-md-6">
+            </div>
+            </div>
+
+            <?php
+            }
+        ?>
+                    <!-- <div class="col-lg-4 col-md-6">
                     <div class="item">
                         <a href="property-details.html"><img src="images/property-02.jpg" alt=""></a>
                         <span class="category">Luxury Villa</span>
@@ -368,7 +377,7 @@
                             <a href="property-details.php">Schedule a visit</a>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

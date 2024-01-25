@@ -1,3 +1,21 @@
+<?php
+   require_once('./dashbord/database.php');
+
+   require_once('./dashbord/scripts/contactManager.php');
+
+   $contactManager = new ContactManager($conn);
+
+   if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create'])) {
+       $email = isset($_POST['email']) ? $_POST['email'] : '';
+       $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
+       $message = isset($_POST['message']) ? $_POST['message'] : '';
+
+       $result = $contactManager->create($message, $email, $phone);
+   }
+
+   ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,40 +48,34 @@
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, do eiusmod tempor pack incididunt ut labore et dolore magna aliqua quised ipsum suspendisse.</p>
         </div>
         <div class="col-lg-6">
-          <form id="contact-form" action="" method="post">
-            <div class="row">
-              <div class="col-lg-12">
-                <fieldset>
-                  <label for="name">Full Name</label>
-                  <input type="name" name="name" id="name" placeholder="Your Name..." autocomplete="on" required>
-                </fieldset>
-              </div>
-              <div class="col-lg-12">
-                <fieldset>
-                  <label for="email">Email Address</label>
-                  <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your E-mail..." required="">
-                </fieldset>
-              </div>
-              <div class="col-lg-12">
-                <fieldset>
-                  <label for="subject">Subject</label>
-                  <input type="subject" name="subject" id="subject" placeholder="Subject..." autocomplete="on" >
-                </fieldset>
-              </div>
-              <div class="col-lg-12">
-                <fieldset>
-                  <label for="message">Message</label>
-                  <textarea name="message" id="message" placeholder="Your Message"></textarea>
-                </fieldset>
-              </div>
-              <div class="col-lg-12">
-                <fieldset>
-                  <button type="submit" id="form-submit" class="orange-button">Send Message</button>
-                </fieldset>
-              </div>
-            </div>
-          </form>
-        </div>
+            <form id="contact-form" method="post" enctype="multipart/form-data">
+               <div class="row">
+                  <div class="col-lg-12">
+                     <fieldset>
+                        <label for="email">Email Address</label>
+                        <input type="text" name="email" id="email" pattern="[^ @]*@[^ @]*" placeholder="Your E-mail..." required="">
+                     </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                     <fieldset>
+                        <label for="phone">Phone Number</label>
+                        <input type="text" name="phone" id="phone" placeholder="Phone ..." required="">
+                     </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                     <fieldset>
+                        <label for="message">Message</label>
+                        <textarea name="message" id="message" placeholder="Your Message"></textarea>
+                     </fieldset>
+                  </div>
+                  <div class="col-lg-12">
+                     <fieldset>
+                        <button type="submit" class="orange-button" name="create">Send Message</button>
+                     </fieldset>
+                  </div>
+               </div>
+            </form>
+         </div>
       </div>
     </div>
   </div>
