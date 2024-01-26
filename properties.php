@@ -29,7 +29,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js"
         integrity="sha512-Zq2BOxyhvnRFXu0+WE6ojpZLOU2jdnqbrM1hmVdGzyeCa1DgM3X5Q4A/Is9xA1IkbUeDd7755dNNI/PzSf2Pew=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+        <style>
+            .row-2 {
+                justify-content: space-between;
+                margin: 20px auto 20px 74%;
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+            }
+            .row {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+        </style>
 </head>
 
 <body>
@@ -45,7 +59,32 @@
         </div>
     </div>
 
+    <?php
+    $name = "";
+    $filtre = "";
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST["title"])) {
+            $name = $_POST['title'];
+            $filtre = " and title like '%" . $name . "%'";
+        }
+    }
+    
+    ?>
+
     <div class="section properties">
+    <div class=" row-2">
+        <form method="POST" action="">
+			<div class="col-md-12 row">
+				<div class="col-md-8">
+					<input name="name" class="" value="<?php echo $name; ?>">
+				</div>
+				<div class="col-md-4" style="margin-left:10px">
+					<button type="submit" class="btn" name="search">Search</button>
+				</div>						
+			</div>
+		</form>
+	</div>
+
         <div class="container">
             <!-- <ul class="properties-filter">
             <li>

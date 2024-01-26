@@ -47,9 +47,9 @@ CREATE TABLE `product` (
   `updated_at` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Data for table `product`
-INSERT INTO `product` (`categoryId`, `title`, `description`, `thumbnail`, `created_at`, `updated_at`) VALUES
-('39', 'What is Lorem Ipsum?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', 'backgroundDefault.jpg', '2023-11-28 15:53:46.580379', '0000-00-00');
+-- -- Data for table `product`
+-- INSERT INTO `product` (`categoryId`, `title`, `description`, `thumbnail`, `created_at`, `updated_at`) VALUES
+-- ('39', 'What is Lorem Ipsum?', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry', 'backgroundDefault.jpg', '2023-11-28 15:53:46.580379', '0000-00-00');
 
 -- Table structure for table `contact`
 CREATE TABLE `contact` (
@@ -62,8 +62,8 @@ CREATE TABLE `contact` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Data for table `contact`
-INSERT INTO `contact` (`message`, `email`, `phoneNumber`, `created_at`, `updated_at`) VALUES
-('Sample message', 'sample@email.com', '1234567890', '2023-11-28 16:00:00', '0000-00-00');
+-- INSERT INTO `contact` (`message`, `email`, `phoneNumber`, `created_at`, `updated_at`) VALUES
+-- ('Sample message', 'sample@email.com', '1234567890', '2023-11-28 16:00:00', '0000-00-00');
 
 
 -- Create a new comments table

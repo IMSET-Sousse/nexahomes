@@ -20,12 +20,26 @@
   </div>
 
 					<?php
+					
+					// Database connection details
+					$host = "localhost";       // Hostname of the database server
+					$user = "root";            // Database username
+					$password = "";            // Database password
+					$database = "test_db";     // Database name
+					// Create a new mysqli object for establishing a database connection
+					$conn = new mysqli($host, $user, $password, $database);
+					if ($conn->connect_error) {
+						// If connection fails, terminate the script and display an error message
+						die("Connection failed: " . $conn->connect_error);
+					}
+					
 		if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			if (isset($_POST["login"])) {
 				$username = $_POST["username"];
 				$password = $_POST["password"];
 
-				$requete = "SELECT * FROM `authentification` where login='".$username."' and password = '".$password."'";
+				$requete = "SELECT * FROM authentification where login='".$username."' and password = '".$password."'";
+
 				$query = $conn->query($requete);		
 				$num = $query->num_rows;
 				// Simple validation (you can replace this)
@@ -51,7 +65,7 @@
 					$maxID = $enreg['maxID'];
 				}
 
-				$sql="INSERT INTO `authentification`(`id`, `login`, `password`, `name`, `phone`) VALUES ";
+				$sql="INSERT INTO authentification(id, login, password, name, phone) VALUES ";
 				$sql=$sql."('".$maxID."','".$newUsername."','".$newPassword."','".$name."','".$phone."')";
 				$query = $conn->query($sql);
 				$_SESSION['ID'] = $maxID;
@@ -62,55 +76,54 @@
 		}
 					?>
 
-					<div class="col-2">
-						<div class="form-container">
-							<div class="form-btn">
-								<span onclick="login()">Login</span>
-								<span onclick="register()">Register</span>
-								<hr id="indicator">
-							</div>
-							<!-- Login form -->
-							<form id="loginform" method="POST">
-								<input type="text" name="username" placeholder="Username">
-								<input type="password" name="password" placeholder="Password">
-								<button type="submit" class="btn" name="login">Login</button>
-							</form>
+<div class="col-16 text-center">
+        <div class="form-container">
+            <div class="form-btn">
+                <span onclick="login()">Login</span>
+                <span onclick="register()">Register</span>
+                <hr id="indicator">
+            </div>
+            <!-- Login form -->
+            <form id="loginform" method="POST">
+                <input type="text" name="username" placeholder="Username">
+                <input type="password" name="password" placeholder="Password">
+                <button type="submit" class="btn" name="login">Login</button>
+            </form>
 
-							<!-- Registration form -->
-							<form id="rgform" method="POST">
-								<input type="text" name="name" placeholder="Name">
-								<input type="text" name="phone" placeholder="Phone">
-								<input type="text" name="newUsername" placeholder="New Username">
-								<input type="password" name="newPassword" placeholder="New Password">
-								<button type="submit" class="btn" name="register">Register</button>
-							</form>
+            <!-- Registration form -->
+            <form id="rgform" method="POST">
+                <input type="text" name="name" placeholder="Name">
+                <input type="text" name="phone" placeholder="Phone">
+                <input type="text" name="newUsername" placeholder="New Username">
+                <input type="password" name="newPassword" placeholder="New Password">
+                <button type="submit" class="btn" name="register">Register</button>
+            </form>
+        </div>
+    </div>
 
-						</div>
-					</div>
+    <?php require('./footer.php') ?>
+
+    <!-- JS for form -->
+    <script>
+        var loginform = document.getElementById("loginform");
+        var rgform = document.getElementById("rgform");
+        var indicator = document.getElementById("indicator");
+
+        function register(){
+            rgform.style.transform = "translateX(0px)";
+            loginform.style.transform = "translateX(0px)";
+            indicator.style.transform = "translateX(100px)";
+        }
+        function login(){
+            rgform.style.transform = "translateX(300px)";
+            loginform.style.transform = "translateX(300px)";
+            indicator.style.transform = "translateX(0px)";
+        }
+    </script>
 				</div>
 			</div>
 		</div>	
-		<?php require('./navbar_footer/footer.php') ?>
 
-		<!----- js for form ----->
-		<script>
-		
-		var loginform = document.getElementById("loginform");
-		var rgform = document.getElementById("rgform");
-		var indicator = document.getElementById("indicator");
-		
-		function register(){
-			rgform.style.transform = "translateX(0px)";
-			loginform.style.transform = "translateX(0px)";
-			indicator.style.transform = "translateX(100px)";
-		}
-		function login(){
-			rgform.style.transform = "translateX(300px)";
-			loginform.style.transform = "translateX(300px)";
-			indicator.style.transform = "translateX(0px)";
-		}
-		
-		</script>
 
 	</body>
 </html>

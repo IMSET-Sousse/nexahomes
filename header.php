@@ -28,6 +28,9 @@
                                 <li><a href="contact.php">Contact Us</a></li>
                                 <li><a href="about.php">About Us</a></li>
                                 <li><a href="account.php">Account</a></li>
+                                <?php if(isset($_SESSION['ID'])){ if($_SESSION['ID']>0){ ?>
+                                    <li><a href="logout.php">Logout </a></li>		
+                                <?php }} ?>
                                 <!-- <li><a href="#"><i class="fa fa-calendar"></i> Schedule a visit</a></li> -->
                             </ul>   
                             <a class='menu-trigger'>
